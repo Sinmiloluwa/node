@@ -9,7 +9,11 @@
   "author": "\"Simons\"",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.6",
     "express": "^4.17.3",
-    "nodemon": "^2.0.15"
+    "mongoose": "^6.2.10",
+    "nodemon": "^2.0.15",
+    "validator": "^13.7.0"
   }
 }
