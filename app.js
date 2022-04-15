@@ -18,11 +18,7 @@ const app = express()
 app.use(express.json())
 app.use(cookieParser())
 
-const port = process.env.PORT || 5000;
-if(connectDb) {
-    app.listen(port)
-    console.log(`Listening on Port ${port}`)
-}
+
 
 
 app.get('/set-cookies', (req, res) =>  {
@@ -42,6 +38,12 @@ app.get('/read-cookies', (req, res) => {
 app.get('/', (req, res) => {
     res.send('Hello world!')
 })
+
+const port = process.env.PORT || 5000;
+if(connectDb) {
+    app.listen(port)
+    console.log(`Listening on Port ${port}`)
+}
 
 
 app.use(userRoutes)
