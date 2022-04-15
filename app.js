@@ -30,7 +30,7 @@ app.get('/set-cookies', (req, res) =>  {
     res.send('you set the cookies')
 })
 
-app.get('/read-cookies', (req, res) => {
+app.get('/read-cookie', (req, res) => {
     const cookies = req.cookies
     res.json(cookies)
 })
