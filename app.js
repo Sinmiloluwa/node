@@ -21,7 +21,7 @@ app.use(cookieParser())
 const port = process.env.PORT || 5000;
 if(connectDb) {
     app.listen(port)
-    console.log("Listening on Port")
+    console.log(`Listening on Port ${port}`)
 }
 
 
