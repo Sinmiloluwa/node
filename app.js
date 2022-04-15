@@ -39,6 +39,10 @@ app.get('/read-cookies', (req, res) => {
     res.json(cookies)
 })
 
+app.get('/', (req, res) => {
+    res.send('Hello world!')
+})
+
 
 app.use(userRoutes)
 app.use(authRoutes)
