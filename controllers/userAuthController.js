@@ -1,5 +1,6 @@
-// require the user model
+// require the dependencies
 const User = require('../models/user')
+const jwt = require('jsonwebtoken')
 
 // handle errors
 const handleErrors = (err) => {
@@ -21,12 +22,22 @@ const handleErrors = (err) => {
     return errors
 }
 
+const maxAge = 3 * 24 * 60 * 60;
+
+const createToken = (id) => {
+    return jwt.sign({id}, 'vodeo secret token', {
+        expiresIn: maxAge
+    })
+}
+
 // create authentication functions
 const user_signup = async (req, res) => {
     const{email, password, username} = req.body
     try{
         const user = await User.create({email, password, username})
-        res.status(201).json(user)
+        const token = createToken(user._id)
+        res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge * 1000})
+        res.status(201).json({user: user._id})
     }
     catch(err) {
         const errors = handleErrors(err)
