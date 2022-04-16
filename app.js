@@ -14,13 +14,15 @@ const authRoutes = require('./routes/authRoutes')
 // call express app
 const app = express()
 
-// middleware
-app.use(express.json())
-app.use(cookieParser())
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     next();
 });
+
+// middleware
+app.use(express.json())
+app.use(cookieParser())
+
 
 
 
