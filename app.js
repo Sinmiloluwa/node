@@ -15,7 +15,7 @@ const authRoutes = require('./routes/authRoutes')
 const app = express()
 
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'https://node-black.vercel.app/signup');
+    res.header('Access-Control-Allow-Origin', 'https://node-black.vercel.app');
     next();
 });
 
