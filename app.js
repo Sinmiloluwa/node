@@ -39,11 +39,9 @@ app.get('/', (req, res) => {
     res.send('Hello world!')
 })
 
-const port = process.env.PORT || 5000;
-if(connectDb) {
-    app.listen(port)
-    console.log(`Listening on Port ${port}`)
-}
+const port = process.env.PORT || 8000;
+app.listen(port)
+console.log(`Listening on Port ${port}`)
 
 
 app.use(userRoutes)
