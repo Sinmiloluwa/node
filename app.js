@@ -1,6 +1,9 @@
 // require Express
 const express = require('express')
 
+// require cors
+const cors = require('cors')
+
 // require db modules
 const {connectDb} = require('./db')
 
@@ -20,6 +23,20 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Credentials','true')
     next();
 });
+const corsOpts = {
+    origin: '*',
+  
+    methods: [
+      'GET',
+      'POST',
+    ],
+  
+    allowedHeaders: [
+      'Content-Type',
+    ],
+  };
+  
+  app.use(cors(corsOpts));
 
 // middleware
 app.use(express.json())
