@@ -44,8 +44,16 @@ const user_signup = async (req, res) => {
     }
 }
 
-const user_signin = (req, res) => {
-    res.send("signin")
+const user_signin = async (req, res) => {
+    const {email, password } = req.body
+
+    try {
+        const user = await User.login(email, password)
+        res.status(200).json({id : user._id})
+    }
+    catch(err) {
+        res.status(400).json({})
+    }
 }
 
 
