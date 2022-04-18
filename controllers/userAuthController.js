@@ -7,6 +7,16 @@ const handleErrors = (err) => {
     console.log(err.message, err.code);
     let errors = {email: '', password: '', username: ''}
 
+    // Incorrect Email
+    if (err.message === 'Incorrect Email') {
+        errors.email = "This email is not registered"
+    }
+
+    // Incorrect Password
+    if (err.message === 'Pasword is Incorrect') {
+        errors.password = "Password is not valid"
+    }
+
     // duplicate error
     if(err.code === 11000) {
         errors.email = "This email already exists";
@@ -48,10 +58,12 @@ const user_signin = async (req, res) => {
     const {email, password } = req.body
 
     try {
+        const token = createToken(user._id)
         const user = await User.login(email, password)
-        res.status(200).json({user : user._id})
+        res.status(200).json({user : user._id, token : token})
     }
     catch(err) {
+        const errors = handleErrors(err)
         res.status(400).json({})
     }
 }
