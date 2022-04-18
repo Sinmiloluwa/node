@@ -60,7 +60,7 @@ const user_signin = async (req, res) => {
     try {
         const user = await User.login(email, password)
         const token = createToken(user._id)
-        res.status(200).json({user : user._id, token : token})
+        res.status(200).json({user : user._id, token : token, username: user.username})
     }
     catch(err) {
         const errors = handleErrors(err)
