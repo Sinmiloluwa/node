@@ -20,6 +20,6 @@ const requireAuth = (req, res, next) => {
     }
 }
 
-modeule.exports = {
+module.exports = {
     requireAuth
 }
