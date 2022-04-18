@@ -41,6 +41,7 @@ const corsOpts = {
 // middleware
 app.use(express.json())
 app.use(cookieParser())
+const {requireAuth} = require('./middleware/authMiddleware')
 
 
 
@@ -62,6 +63,10 @@ app.get('/read-cookie', (req, res) => {
 
 app.get('/', (req, res) => {
     res.send('Hello world!')
+})
+
+app.get('/videos', requireAuth, (req, res) => {
+    res.send("No time")
 })
 
 const port = process.env.PORT || 8000;
