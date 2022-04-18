@@ -68,8 +68,14 @@ const user_signin = async (req, res) => {
     }
 }
 
+const user_signout = async (req, res) => {
+    res.cookie('jwt','', {maxAge: 1})
+    res.send('Done')
+}
+
 
 module.exports = {
     user_signup,
-    user_signin
+    user_signin,
+    user_signout
 }
