@@ -41,7 +41,8 @@ const corsOpts = {
 // middleware
 app.use(express.json())
 app.use(cookieParser())
-const {requireAuth} = require('./middleware/authMiddleware')
+const {requireAuth, checkAdmin} = require('./middleware/authMiddleware')
+
 
 
 
@@ -67,6 +68,10 @@ app.get('/', (req, res) => {
 
 app.get('/videos', requireAuth, (req, res) => {
     res.send("No time")
+})
+
+app.get('/admin', checkAdmin, (req, res) => {
+    res.send('Always')
 })
 
 const port = process.env.PORT || 8000;

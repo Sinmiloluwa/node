@@ -20,6 +20,10 @@ const userSchema = new Schema({
         type: String,
         required: [true, 'Password cannot be empty'],
         minlength: [6,'Minimum password characters is 6 letters']
+    },
+    role : {
+        type : String,
+        required: true
     }
 })
 
