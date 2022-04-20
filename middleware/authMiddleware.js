@@ -1,5 +1,10 @@
 const jwt = require('jsonwebtoken')
 const User = require('../models/user.js')
+const Grid = require('gridfs-stream');
+const multer = require('multer')
+const crypto = require('crypto')
+const {GridFsStorage} = require('multer-gridfs-storage')
+const path = require('path')
 
 const requireAuth = (req, res, next) => {
     const token = req.body.token || req.query.token || req.headers["x-access-token"];
@@ -49,6 +54,9 @@ const checkAdmin = (req, res, next) => {
         next()
     }
 }
+
+// storage engine
+
 
 module.exports = {
     requireAuth,

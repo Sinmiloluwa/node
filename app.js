@@ -1,5 +1,10 @@
 // require Express
 const express = require('express')
+const Grid = require('gridfs-stream');
+const multer = require('multer')
+const crypto = require('crypto')
+const {GridFsStorage} = require('multer-gridfs-storage')
+const path = require('path')
 
 // require cors
 const cors = require('cors')
@@ -9,10 +14,12 @@ const {connectDb} = require('./db')
 
 // require cookie parser
 const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')
 
 // require routes
 const userRoutes = require('./routes/userRoutes')
 const authRoutes = require('./routes/authRoutes')
+const adminRoutes = require('./routes/adminRoutes')
 
 // call express app
 const app = express()
@@ -40,6 +47,7 @@ const corsOpts = {
 
 // middleware
 app.use(express.json())
+app.use(bodyParser.json())
 app.use(cookieParser())
 const {requireAuth, checkAdmin} = require('./middleware/authMiddleware')
 
@@ -66,13 +74,40 @@ app.get('/', (req, res) => {
     res.send('Hello world!')
 })
 
-app.get('/videos', requireAuth, (req, res) => {
-    res.send("No time")
-})
 
 app.get('/admin', checkAdmin, (req, res) => {
     res.send('Always')
 })
+
+let gfs;
+
+
+
+// storage Engine
+const storage = new GridFsStorage({
+    url: "mongodb+srv://Simons:Precious97!@cluster0.ci0ov.mongodb.net/vodeo?retryWrites=true&w=majority",
+    file: (req, file) => {
+      return new Promise((resolve, reject) => {
+        crypto.randomBytes(16, (err, buf) => {
+          if (err) {
+            return reject(err);
+          }
+          const filename = buf.toString('hex') + path.extname(file.originalname);
+          const fileInfo = {
+            filename: filename,
+            bucketName: 'videos'
+          };
+          resolve(fileInfo);
+        });
+      });
+    }
+  });
+ const uploadFile = multer({ storage });
+
+app.post('/video-upload', uploadFile.single('file'), (req,res) => {
+    res.json({name : req.body, file: req.file})
+})  
+
 
 const port = process.env.PORT || 8000;
 app.listen(port)
@@ -81,3 +116,4 @@ console.log(`Listening on Port ${port}`)
 
 app.use(userRoutes)
 app.use(authRoutes)
+

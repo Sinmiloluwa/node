@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const Grid = require('gridfs-stream');
 
 // connect to db
 module.exports = {
@@ -6,3 +7,4 @@ module.exports = {
     .then((result) => console.log('Connected'))
     .catch((err) => console.log(err))
 }
+
