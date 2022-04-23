@@ -3,12 +3,11 @@ const { upload_videos }  = require('../controllers/adminAuthController');
 
 const router = express.Router();
 
-const {uploadFile }= require('../middleware/authMiddleware')
+const {checkAdmin}= require('../middleware/authMiddleware')
 
 
-adminAuthController = require('../controllers/adminAuthController')
+const adminAuthController = require('../controllers/adminAuthController')
 
-
-
+router.post('/admin/upload', checkAdmin, adminAuthController.upload_videos)
 
 module.exports = router;

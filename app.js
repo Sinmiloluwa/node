@@ -6,6 +6,7 @@ const crypto = require('crypto')
 const {GridFsStorage} = require('multer-gridfs-storage')
 const path = require('path')
 
+
 // require cors
 const cors = require('cors')
 
@@ -79,34 +80,6 @@ app.get('/admin', checkAdmin, (req, res) => {
     res.send('Always')
 })
 
-let gfs;
-
-
-
-// storage Engine
-const storage = new GridFsStorage({
-    url: "mongodb+srv://Simons:Precious97!@cluster0.ci0ov.mongodb.net/vodeo?retryWrites=true&w=majority",
-    file: (req, file) => {
-      return new Promise((resolve, reject) => {
-        crypto.randomBytes(16, (err, buf) => {
-          if (err) {
-            return reject(err);
-          }
-          const filename = buf.toString('hex') + path.extname(file.originalname);
-          const fileInfo = {
-            filename: filename,
-            bucketName: 'videos'
-          };
-          resolve(fileInfo);
-        });
-      });
-    }
-  });
- const uploadFile = multer({ storage });
-
-app.post('/video-upload', uploadFile.single('file'), (req,res) => {
-    res.json({name : req.body, file: req.file})
-})  
 
 
 const port = process.env.PORT || 8000;
@@ -116,4 +89,5 @@ console.log(`Listening on Port ${port}`)
 
 app.use(userRoutes)
 app.use(authRoutes)
+app.use(adminRoutes)
 

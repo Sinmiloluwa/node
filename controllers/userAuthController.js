@@ -64,7 +64,7 @@ const user_signin = async (req, res) => {
     }
     catch(err) {
         const errors = handleErrors(err)
-        res.status(400).json({})
+        res.status(400).json({errors})
     }
 }
 

@@ -50,8 +50,7 @@ const checkAdmin = (req, res, next) => {
         })
     }
     else {
-        res.locals.user = null
-        next()
+        res.json({message : "No token found"})
     }
 }
 
