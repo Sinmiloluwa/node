@@ -23,7 +23,7 @@ const upload_videos = async (req, res) => {
             const currentTime =  new Date().getTime()
 
             // video duration
-            getVideoDurationInSeconds(videoPath).then((duration) => {
+            getVideoDurationInSeconds(videoPath, '/node_modules/@ffprobe-installer/win32-x64/ffprobe').then((duration) => {
                 const hours  = Math.floor(duration/60/60)
                 const minutes = Math.floor(duration/60) - (hours * 60)
                 const seconds = Math.floor(duration % 60)
