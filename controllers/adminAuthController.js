@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 const Video = require('../models/video')
 const formidable = require('formidable')
 const fs = require('fs')
-const { getVideoDurationInSeconds } = require('get-video-duration')
+const {getVideoDurationInSeconds} = require('get-video-duration')
 const path = require('path')
 
 const upload_videos = async (req, res) => {

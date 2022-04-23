@@ -1,9 +1,5 @@
 // require Express
 const express = require('express')
-const Grid = require('gridfs-stream');
-const multer = require('multer')
-const crypto = require('crypto')
-const {GridFsStorage} = require('multer-gridfs-storage')
 const path = require('path')
 
 
