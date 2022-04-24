@@ -17,6 +17,7 @@ const bodyParser = require('body-parser')
 const userRoutes = require('./routes/userRoutes')
 const authRoutes = require('./routes/authRoutes')
 const adminRoutes = require('./routes/adminRoutes')
+const videoRoutes = require('./routes/videoRoutes')
 
 // call express app
 const app = express()
@@ -86,4 +87,5 @@ console.log(`Listening on Port ${port}`)
 app.use(userRoutes)
 app.use(authRoutes)
 app.use(adminRoutes)
+app.use(videoRoutes)
 
