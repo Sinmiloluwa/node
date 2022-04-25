@@ -35,7 +35,7 @@ const checkAdmin = (req, res, next) => {
             if(err) {
                 console.log(err);
                 res.locals.user = null
-                next()
+                res.json({message : "expired token"})
             } else {
                 console.log(decodedToken);
                 let user = await User.findById(decodedToken.id)

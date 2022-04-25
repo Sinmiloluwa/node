@@ -1,6 +1,8 @@
 // require Express
 const express = require('express')
 const path = require('path')
+const cloudinary = require("cloudinary");
+require('dotenv').config()
 
 
 // require cors
@@ -50,7 +52,11 @@ app.use(cookieParser())
 const {requireAuth, checkAdmin} = require('./middleware/authMiddleware')
 
 
-
+cloudinary.config({
+    cloud_name : process.env.CLOUD_NAME,
+    api_key : process.env.API_KEY,
+    api_secret : process.env.API_SECRET
+})
 
 
 
