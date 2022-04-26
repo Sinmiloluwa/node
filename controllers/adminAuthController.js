@@ -15,6 +15,8 @@ const upload_videos = async (req, res) => {
         const description =  fields.description
         const category =  fields.category
 
+        const oldThumbnail = files.thumbnail.filepath
+
         const thumbnail = "public/thumbnails/" + new Date().getTime() +"-" + files.thumbnail.originalFilename
 
         const oldVideoPath= files.video.filepath
@@ -30,6 +32,9 @@ const upload_videos = async (req, res) => {
     eager_async: true,
     eager_notification_url: "https://mysite.example.com/notify_endpoint" },
   function(error, result) {console.log(result, error)});
+
+  cloudinary.v2.uploader.upload(oldThumbnail, 
+    function(error, result) {console.log(result, error)});
 
         fs.rename(oldVideoPath, videoPath, (err) => {
             const currentTime =  new Date().getTime()
