@@ -15,11 +15,15 @@ const upload_videos = async (req, res) => {
         const description =  fields.description
         const category =  fields.category
 
-        const thumbnailPath = files.thumbnail.filepath
+        const oldThumbnailPath = files.thumbnail.filepath
 
-        const videoPath= files.video.filepath
+        const oldVideoPath= files.video.filepath
 
-        cloudinary.v2.uploader.upload(videoPath, 
+        const newThumbnailPath = "public/thumbnails/" + new Date().getTime() + "-" + files.thumbnail.originalFilename
+
+        const newVideoPath = "public/videos/" + new Date().getTime() + "-" + files.video.originalFilename
+
+        cloudinary.v2.uploader.upload(oldVideoPath, 
   { resource_type: "video", 
     public_id: "vodio/videos/" + files.video.originalFilename,
     chunk_size: 6000000,
@@ -30,23 +34,27 @@ const upload_videos = async (req, res) => {
     eager_notification_url: "https://mysite.example.com/notify_endpoint" },
   function(error, result) {console.log(result, error)});
 
-  cloudinary.v2.uploader.upload(thumbnailPath, 
+  cloudinary.v2.uploader.upload(oldThumbnailPath, 
     function(error, result) {console.log(result, error)});
-            const currentTime =  new Date().getTime()
+
+            fs.rename(oldVideoPath, newVideoPath, (error) => {
+              const currentTime =  new Date().getTime()
 
             // video duration
-            getVideoDurationInSeconds(videoPath, '/node_modules/@ffprobe-installer/win32-x64/ffprobe').then((duration) => {
+            getVideoDurationInSeconds(newVideoPath, '/node_modules/@ffprobe-installer/win32-x64/ffprobe').then((duration) => {
                 const hours  = Math.floor(duration/60/60)
                 const minutes = Math.floor(duration/60) - (hours * 60)
                 const seconds = Math.floor(duration % 60)
                 // insert into database
                 // const {video, thumbnail, category, description, title} = req.body
     
-                    const video = Video.create({videoPath, thumbnailPath, category, description, title, hours, minutes, seconds})
+                    const video = Video.create({videoPath : newVideoPath, thumbnailPath : newThumbnailPath, category, description, title, hours, minutes, seconds})
                     console.log(video)
                     video.then ((data) => {
                         res.status(200).json({video : data})
                     })
+            })
+            
     })
 })
 }
