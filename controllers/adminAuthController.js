@@ -15,11 +15,11 @@ const upload_videos = async (req, res) => {
         const description =  fields.description
         const category =  fields.category
 
-        const oldThumbnail = files.thumbnail.filepath
+        const thumbnailPath = files.thumbnail.filepath
 
-        const oldVideoPath= files.video.filepath
+        const videoPath= files.video.filepath
 
-        cloudinary.v2.uploader.upload(oldVideoPath, 
+        cloudinary.v2.uploader.upload(videoPath, 
   { resource_type: "video", 
     public_id: "vodio/videos/" + files.video.originalFilename,
     chunk_size: 6000000,
@@ -30,10 +30,8 @@ const upload_videos = async (req, res) => {
     eager_notification_url: "https://mysite.example.com/notify_endpoint" },
   function(error, result) {console.log(result, error)});
 
-  cloudinary.v2.uploader.upload(oldThumbnail, 
+  cloudinary.v2.uploader.upload(thumbnailPath, 
     function(error, result) {console.log(result, error)});
-
-        fs.rename(oldVideoPath, videoPath, (err) => {
             const currentTime =  new Date().getTime()
 
             // video duration
@@ -44,14 +42,11 @@ const upload_videos = async (req, res) => {
                 // insert into database
                 // const {video, thumbnail, category, description, title} = req.body
     
-                    const video = Video.create({videoPath, thumbnail, category, description, title, hours, minutes, seconds})
+                    const video = Video.create({videoPath, thumbnailPath, category, description, title, hours, minutes, seconds})
                     console.log(video)
                     video.then ((data) => {
                         res.status(200).json({video : data})
                     })
-                })  
-            
-            
     })
 })
 }
