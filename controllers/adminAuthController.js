@@ -17,10 +17,7 @@ const upload_videos = async (req, res) => {
 
         const oldThumbnail = files.thumbnail.filepath
 
-        const thumbnail = "public/thumbnails/" + new Date().getTime() +"-" + files.thumbnail.originalFilename
-
         const oldVideoPath= files.video.filepath
-        const videoPath = "public/videos/" + new Date().getTime() + "-" + files.video.originalFilename
 
         cloudinary.v2.uploader.upload(oldVideoPath, 
   { resource_type: "video", 
