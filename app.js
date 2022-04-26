@@ -60,31 +60,6 @@ cloudinary.config({
 
 
 
-app.get('/set-cookies', (req, res) =>  {
-    // res.setHeader('set-cookie', 'newUser=true');
-
-    res.cookie('newUser', false, ({maxAge: 1000 * 60 * 60 * 24}))
-    res.cookie('isAdmin', true)
-
-    res.send('you set the cookies')
-})
-
-app.get('/read-cookie', (req, res) => {
-    const cookies = req.cookies
-    res.json(cookies)
-})
-
-app.get('/', (req, res) => {
-    res.send('Hello world!')
-})
-
-
-app.get('/admin', checkAdmin, (req, res) => {
-    res.send('Always')
-})
-
-
-
 const port = process.env.PORT || 5000;
 app.listen(port)
 console.log(`Listening on Port ${port}`)
