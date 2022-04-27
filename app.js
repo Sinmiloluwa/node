@@ -49,6 +49,7 @@ const corsOpts = {
 app.use(express.json())
 app.use(bodyParser.json())
 app.use(cookieParser())
+app.use(express.urlencoded({ extended: false }));
 const {requireAuth, checkAdmin} = require('./middleware/authMiddleware')
 
 
