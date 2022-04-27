@@ -48,7 +48,7 @@ const corsOpts = {
 // middleware
 app.use(cookieParser())
 app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit:50000}));
 app.use(express.json())
 const {requireAuth, checkAdmin} = require('./middleware/authMiddleware')
 
