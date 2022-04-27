@@ -36,25 +36,21 @@ const upload_videos = async (req, res) => {
 
   cloudinary.v2.uploader.upload(oldThumbnailPath, 
     function(error, result) {console.log(result, error)});
-
-            fs.rename(oldVideoPath, newVideoPath, (error) => {
               const currentTime =  new Date().getTime()
 
             // video duration
-            getVideoDurationInSeconds(newVideoPath).then((duration) => {
+            getVideoDurationInSeconds(oldVideoPath).then((duration) => {
                 const hours  = Math.floor(duration/60/60)
                 const minutes = Math.floor(duration/60) - (hours * 60)
                 const seconds = Math.floor(duration % 60)
                 // insert into database
                 // const {video, thumbnail, category, description, title} = req.body
     
-                    const video = Video.create({videoPath : newVideoPath, thumbnailPath : newThumbnailPath, category, description, title, hours, minutes, seconds})
+                    const video = Video.create({videoPath : oldVideoPath, thumbnailPath : oldThumbnailPath, category, description, title, hours, minutes, seconds})
                     console.log(video)
                     video.then ((data) => {
                         res.status(200).json({video : data})
                     })
-            })
-            
     })
 })
 }
