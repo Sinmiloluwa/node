@@ -34,8 +34,10 @@ const upload_videos = async (req, res) => {
     eager_notification_url: "https://mysite.example.com/notify_endpoint" },
   function(error, result) {console.log(result, error)});
 
-  cloudinary.v2.uploader.upload(oldThumbnailPath, 
-    function(error, result) {console.log(result, error)});
+  const thumbnail = cloudinary.v2.uploader.upload(oldThumbnailPath, 
+    function(error, result) {
+      console.log(result, error)
+    });
               const currentTime =  new Date().getTime()
 
             // video duration
